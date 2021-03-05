@@ -1,3 +1,4 @@
 module.exports = {
-  Package: require("./Package")
+  Package: require("./Package"),
+  Employee: require("./Employee")
 };

@@ -4,6 +4,7 @@ const Models = require("../db/Models");
 async function createTables() {
   await db.authenticate();
   await Models.Package.sync();
+  await Models.Employee.sync();
 }
 
 module.exports = createTables;
