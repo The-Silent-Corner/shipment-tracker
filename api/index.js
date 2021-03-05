@@ -4,11 +4,9 @@ const { v4: uuid } = require("uuid");
 
 router.post("/add", async(req, res) => {
   const { customerEmail, toAddress, fromAddress } = req.body;
-  if(!customerEmail || !toAddress || !fromAddress)
-  {
-    return router.sendStatus(400);
+  if(!customerEmail || !toAddress || !fromAddress) {
+    return res.sendStatus(400);
   }
-
   try
   {
     await Package.create({
@@ -36,7 +34,7 @@ router.get("/all", async(req, res) => {
 router.post("/update", async(req, res) =>{
   const{ id, status, shippedDate, deliveryDate } = req.body;
   if(!status || !shippedDate || !deliveryDate) {
-    return router.sendStatus(400);
+    return res.sendStatus(400);
   }
   try
   {

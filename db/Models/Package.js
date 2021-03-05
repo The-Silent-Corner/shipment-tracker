@@ -23,11 +23,11 @@ const Package = dbInstance.define("Packages", {
     allowNull: false
   },
   shippedDate: {
-    type: DataTypes.DATE,
+    type: DataTypes.STRING,
     allowNull: true
   },
   deliveryDate: {
-    type: DataTypes.DATE,
+    type: DataTypes.STRING,
     allowNull: true
   },
   customerEmail: {
