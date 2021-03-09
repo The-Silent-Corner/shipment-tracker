@@ -37,6 +37,8 @@ app.post("/login", async(req, res) =>{
         id: username
       }
     });
+    if(findEmployee.length !== 1)
+      return res.sendStatus(401);
     if(password === findEmployee[0].password) {
       res.cookie("user", {
         user: findEmployee[0].id
