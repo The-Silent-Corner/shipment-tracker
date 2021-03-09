@@ -32,16 +32,17 @@ describe("The API Router", function() {
         
       });
     });
-  });
-  describe("missing a request parameter", function() {
-    it("should send back a 400", async function() {
-      const response = await request.post("/api/add")
-        .set("accept", "application/json")
-        .send({
-          customerEmail: "hello",
-          toAddress: "goodbye"
-        });
-      expect(response.status).toEqual(400);
+
+    describe("missing a request parameter", function() {
+      it("should send back a 400", async function() {
+        const response = await request.post("/api/add")
+          .set("accept", "application/json")
+          .send({
+            customerEmail: "hello",
+            toAddress: "goodbye"
+          });
+        expect(response.status).toEqual(400);
+      });
     });
   });
 
