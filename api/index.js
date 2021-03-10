@@ -26,9 +26,7 @@ router.post("/add", async(req, res) => {
 
 router.get("/all", async(req, res) => {
   const results = await Package.findAll();
-  res.json({
-    Package: results
-  });
+  res.render("viewPackages", { Package: results });
 });
 
 router.post("/update", async(req, res) =>{

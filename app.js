@@ -4,6 +4,7 @@ const app = express();
 const path = require("path");
 const Employee = require("./db/Models/Employee");
 const cookieParser = require("cookie-parser");
+const Package = require("./db/Models/Package");
 
 // Set up middleware
 app.use(express.json());
@@ -53,9 +54,25 @@ app.post("/login", async(req, res) =>{
   }
 });
 
-app.get("/logout", (req, res) => {
+app.get("/logout", async(req, res) => {
   res.clearCookie("user");
   res.redirect("/login");
 });
-
+app.get("/track", async(req, res) =>{
+  res.render("track");
+});
+app.post("/track", async(req, res) =>{
+  const userEmail = req.body.email;
+  const findEmail = await Package.findAll({
+    where: {
+      customerEmail: userEmail
+    }
+  });
+  if(findEmail.length > 0) {
+    console.log(findEmail);
+    console.log(`The length is ${findEmail.length}`);
+    return res.render("packageInfo", { Package: findEmail });
+  }
+  return res.sendStatus(500);
+});
 module.exports = app;
