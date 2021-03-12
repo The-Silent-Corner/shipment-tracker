@@ -52,7 +52,7 @@ router.post("/update", async(req, res) =>{
     console.error(error);
     return res.sendStatus(500);
   }
-  res.sendStatus(200);
+  res.redirect("/api/all");
 });
 
 module.exports = router;

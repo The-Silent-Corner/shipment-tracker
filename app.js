@@ -25,7 +25,8 @@ app.get("/", async(req, res) => {
 
 app.get("/login", async(req, res) =>{
   if(req.cookies.user) {
-    return res.render("employeeHome");
+    // Redirect if already logged in
+    return res.redirect("/");
   }
   res.render("login");
 });
@@ -58,9 +59,11 @@ app.get("/logout", async(req, res) => {
   res.clearCookie("user");
   res.redirect("/login");
 });
+
 app.get("/track", async(req, res) =>{
   res.render("track");
 });
+
 app.post("/track", async(req, res) =>{
   const userEmail = req.body.email;
   const findEmail = await Package.findAll({
@@ -74,5 +77,18 @@ app.post("/track", async(req, res) =>{
     return res.render("packageInfo", { Package: findEmail });
   }
   return res.sendStatus(500);
+});
+
+app.post("/edit-package", async(req, res) => {
+  let { id } = req.query;
+  if(!id) {
+    id = req.body.id;
+  }
+  const data = await Package.findOne({
+    where: {
+      id: id
+    }
+  });
+  res.render("editPackage", { data: data });
 });
 module.exports = app;
