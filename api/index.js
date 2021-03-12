@@ -1,8 +1,13 @@
 const router = require("express").Router();
 const Package = require("../db/Models/Package");
 const { v4: uuid } = require("uuid");
+const { validLogin } = require("../helpers/jwtHelpers");
 
 router.post("/add", async(req, res) => {
+  const valid = validLogin(req, res);
+  if(!valid) {
+    return;
+  }
   const { customerEmail, toAddress, fromAddress } = req.body;
   if(!customerEmail || !toAddress || !fromAddress) {
     return res.sendStatus(400);
@@ -30,10 +35,13 @@ router.get("/all", async(req, res) => {
 });
 
 router.post("/update", async(req, res) =>{
+  const valid = await validLogin(req, res);
+  if(!valid) {
+    return;
+  }
   const { status } = req.body;
   const { id } = req.query;
   if(!status || !id) {
-    console.log("huh");
     return res.sendStatus(400);
   }
   try
