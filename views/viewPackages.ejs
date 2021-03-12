@@ -6,22 +6,35 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Packages</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
 </head>
 <body>
     <h1>Packages</h1>
     <br>
-    <% Package.forEach(e => { %>
-        <p>
-            <span>
-                <%- e.id %>
-            </span>
-            <span>
-                <%- e.status %>
-            </span>
-            <span>
-                <%- e.deliveryDate %>
-            </span>
-        </p>
-    <% }) %>
+    <table>
+        <thead>
+        <td>Package ID</td>
+        <td>Status</td>
+        <td>Customer Email</td>
+        <td>
+        </td>
+        </thead>
+        <tbody>
+              <% Package.forEach(e => { %>
+                  <tr>
+                          <td ><%- e.id %></td>
+                          <td><%- e.status %></td>
+                          <td><%- e.customerEmail %></td>
+                          <td>
+                              <form action="/edit-package?id=<%- e.id %>" method="post">
+                                  <button>Edit Package</button>
+                              </form>
+                          </td>
+                  </tr>
+              <% }) %>
+        </tbody>
+    </table>
+
 </body>
 </html>

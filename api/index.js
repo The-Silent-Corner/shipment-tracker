@@ -30,17 +30,17 @@ router.get("/all", async(req, res) => {
 });
 
 router.post("/update", async(req, res) =>{
-  const{ id, status, shippedDate, deliveryDate } = req.body;
-  if(!status || !shippedDate || !deliveryDate) {
+  const { status } = req.body;
+  const { id } = req.query;
+  if(!status || !id) {
+    console.log("huh");
     return res.sendStatus(400);
   }
   try
   {
     await Package.update(
       {
-        status: status,
-        shippedDate: shippedDate,
-        deliveryDate: deliveryDate
+        status: status
       },
       {
         where: {

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Package</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
+</head>
+<body>
+    <h1>Edit Package</h1>
+    <form method="post" action="/api/update?id=<%-data.id%>">
+        <div>
+            <strong>ID: </strong><%- data.id %>
+        </div>
+        <div>
+            <strong>Status: </strong>
+                <select name="status" selected="none">
+                    <option <%- data.status === "PENDING" ? "selected" : "" %> value="PENDING">PENDING</option>
+                    <option <%- data.status === "DELIVERED" ? "selected" : "" %> value="DELIVERED">DELIVERED</option>
+                    <option <%- data.status === "OUT FOR DELIVER" ? "selected" : "" %> value="OUT FOR DELIVERY">OUT FOR DELIVERY</option>
+                </select>
+        </div>
+        <div>
+            <strong>Shipped Date: </strong><%- data.shippedDate %>
+        </div>
+        <div>
+            <strong>Delivery Date: </strong> <%- data.deliveryDate %>
+        </div>
+        <div>
+            <strong>From Address: </strong><%- data.fromAddress %>
+        </div>
+        <div>
+            <strong>To Address: </strong><%- data.toAddress %>
+        </div>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
