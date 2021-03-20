@@ -39,7 +39,9 @@ router.get("/all", async(req, res) => {
 router.post("/update", async(req, res) =>{
   const valid = await validLogin(req, res);
   if(!valid) {
-    return;
+    return res.status(403).json({
+      message: "no cookie provided"
+    });
   }
   const { status } = req.body;
   const { id } = req.query;
