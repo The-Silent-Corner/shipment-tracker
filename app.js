@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -5,6 +6,8 @@ const path = require("path");
 const Employee = require("./db/Models/Employee");
 const cookieParser = require("cookie-parser");
 const Package = require("./db/Models/Package");
+const jwt = require("jsonwebtoken");
+const { validLogin } = require("./helpers/jwtHelpers");
 
 // Set up middleware
 app.use(express.json());
@@ -12,20 +15,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cookieParser());
+app.use(cookieParser(process.env.SECRET));
 
 app.use("/api", require("./api"));
 
 app.get("/", async(req, res) => {
-  if(req.cookies.user) {
+  if(req.signedCookies.user) {
+    const valid = await validLogin(req, res);
+    if(!valid) {
+      return;
+    }
     return res.render("employeeHome");
   }
   res.render("index");
 });
 
 app.get("/login", async(req, res) =>{
-  if(req.cookies.user) {
-    // Redirect if already logged in
+  if(req.signedCookies.user) {
     return res.redirect("/");
   }
   res.render("login");
@@ -39,11 +45,17 @@ app.post("/login", async(req, res) =>{
         id: username
       }
     });
-    if(findEmployee.length !== 1)
+    if(findEmployee.length !== 1) {
       return res.sendStatus(401);
+    }
     if(password === findEmployee[0].password) {
-      res.cookie("user", {
-        user: findEmployee[0].id
+      const token = jwt.sign({ user: findEmployee[0].id }, process.env.SECRET, {
+        expiresIn: "1h"
+      });
+      res.cookie("user", token, {
+        httpOnly: true,
+        signed: true,
+        maxAge: 1e3 * 3600 // expires in an hour
       });
       return res.redirect("/");
     } else {
@@ -80,6 +92,10 @@ app.post("/track", async(req, res) =>{
 });
 
 app.post("/edit-package", async(req, res) => {
+  const valid = await validLogin(req, res);
+  if(!valid) {
+    return;
+  }
   let { id } = req.query;
   if(!id) {
     id = req.body.id;
