@@ -6,7 +6,9 @@ const { validLogin } = require("../helpers/jwtHelpers");
 router.post("/add", async(req, res) => {
   const valid = validLogin(req, res);
   if(!valid) {
-    return;
+    return res.status(403).json({
+      message: "no cookie provided"
+    });
   }
   const { customerEmail, toAddress, fromAddress } = req.body;
   if(!customerEmail || !toAddress || !fromAddress) {
