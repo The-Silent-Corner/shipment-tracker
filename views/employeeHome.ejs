@@ -5,25 +5,40 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0-0/axios.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://bulma.io/vendor/fontawesome-free-5.15.2-web/css/all.min.css">
+    <%- include("partials/headings") %>
     <title>Employee Homepage</title>
 </head>
 <body>
     <div>
-        <div>
-            <nav><a href="/logout">Logout</a></nav>
-        </div>
-        <div>
+        <%- include("partials/navbar") %>
+        <div class="container column has-text-centered">
             <br>
-            <a href="/api/all">List all packages</a>
             <br><br>
-            <form action="/edit-package" method="POST">
-                <nav>Package Lookup</nav>
-                <input name="id" type="text" />
-                <button>Find</button>
-            </form>
+            <% if(message.length > 0) {%>
+                <%- include("partials/messages", { message: message} ) %>
+            <% } %>
+            <div class="column-is-half">
+                <form action="/edit-package" method="POST">
+                    <nav>Package Lookup</nav>
+                    <div class="container column is-half">
+                        <div class="field has-addons control has-icons-left has-addons-centered">
+                            <p class="control is-expanded">
+                                <input
+                                    required
+                                    name="id"
+                                    type="text"
+                                    class="input is-primary is-mobile"
+                                    placeholder="Tracking ID"
+                                />
+                                <span class="icon is-left">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </p>
+                            <p class="control"><button class="button is-mobile">Find</button></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

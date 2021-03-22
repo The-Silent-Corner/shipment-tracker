@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const Package = require("./db/Models/Package");
 const jwt = require("jsonwebtoken");
 const { validLogin } = require("./helpers/jwtHelpers");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 // Set up middleware
 app.use(express.json());
@@ -16,6 +18,12 @@ app.use(cors());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser(process.env.SECRET));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.SECRET
+}));
+app.use(flash());
 
 app.use("/api", require("./api"));
 
@@ -25,7 +33,7 @@ app.get("/", async(req, res) => {
     if(!valid) {
       return;
     }
-    return res.render("employeeHome");
+    return res.render("employeeHome", { message: req.flash("message") });
   }
   res.render("index");
 });
@@ -100,11 +108,23 @@ app.post("/edit-package", async(req, res) => {
   if(!id) {
     id = req.body.id;
   }
-  const data = await Package.findOne({
-    where: {
-      id: id
+  try {
+    const data = await Package.findOne({
+      where: {
+        id: id
+      }
+    });
+    if(!data) {
+      req.flash("message", {
+        classes: ["is-warning", "is-light"],
+        text: "Package not found"
+      });
+      return res.redirect("/");
     }
-  });
-  res.render("editPackage", { data: data });
+    res.render("editPackage", { data: data });
+  } catch(err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 });
 module.exports = app;
