@@ -127,4 +127,9 @@ app.post("/edit-package", async(req, res) => {
     res.sendStatus(500);
   }
 });
+
+app.get("/add", (req, res) => {
+  res.render("addPackage.ejs", { message: req.flash("message") });
+});
+
 module.exports = app;

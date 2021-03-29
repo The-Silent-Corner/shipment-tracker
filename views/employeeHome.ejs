@@ -14,9 +14,7 @@
         <div class="container column has-text-centered">
             <br>
             <br><br>
-            <% if(message.length > 0) {%>
-                <%- include("partials/messages", { message: message} ) %>
-            <% } %>
+            <%- include("partials/messages", { message: message} ) %>
             <div class="column-is-half">
                 <form action="/edit-package" method="POST">
                     <nav>Package Lookup</nav>

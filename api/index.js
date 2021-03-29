@@ -28,7 +28,12 @@ router.post("/add", async(req, res) => {
     console.error(err);
     return res.sendStatus(500);
   }
-  res.sendStatus(200);
+
+  req.flash("message", {
+    classes: ["is-success", "is-light"],
+    text: "Package added"
+  });
+  res.redirect("/add");
 });
 
 router.get("/all", async(req, res) => {
