@@ -12,31 +12,33 @@
 </head>
 <body>
     <%- include("partials/navbar.ejs") %>
-    <h1>Packages</h1>
-    <br>
-    <table>
-        <thead>
-        <td>Package ID</td>
-        <td>Status</td>
-        <td>Customer Email</td>
-        <td>
-        </td>
-        </thead>
-        <tbody>
-              <% Package.forEach(e => { %>
-                  <tr>
-                          <td ><%- e.id %></td>
-                          <td><%- e.status %></td>
-                          <td><%- e.customerEmail %></td>
-                          <td>
-                              <form action="/edit-package?id=<%- e.id %>" method="post">
-                                  <button>Edit Package</button>
-                              </form>
-                          </td>
-                  </tr>
-              <% }) %>
-        </tbody>
-    </table>
-
+    <div class="column has-text-centered">
+        <h1 class="title">Packages</h1>
+        <div class="container is-center">
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                <td>Package ID</td>
+                <td>Status</td>
+                <td>Customer Email</td>
+                <td>
+                </td>
+                </thead>
+                <tbody>
+                <% Package.forEach(e => { %>
+                    <tr>
+                        <td ><%- e.id %></td>
+                        <td><%- e.status %></td>
+                        <td><%- e.customerEmail %></td>
+                        <td>
+                            <form action="/edit-package?id=<%- e.id %>" method="post">
+                                <button class="button">Edit Package</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
