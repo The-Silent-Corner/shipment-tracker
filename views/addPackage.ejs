@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <%- include("partials/headings.ejs") %>
+    <title>Add a package</title>
+</head>
+<body>
+<%- include("partials/navbar.ejs") %>
+<div class="container column has-text-centered">
+    <%- include("partials/messages.ejs", { message: message }) %>
+    <div class="title">
+        <h1>Add a package</h1>
+    </div>
+
+    <form action="/api/add" method="post">
+        <div class="columns">
+            <div class="column">
+                <label for="status">Status</label>
+                <br>
+                <select class="select" name="status">
+                    <option value="PENDING">Pending</option>
+                    <option value="DELIVERED">Delivered</option>
+                    <option value="OUT FOR DELIVERY">Out for delivery</option>
+                </select>
+            </div>
+
+            <div class="column">
+                <label for="customerEmail">Customer Email</label>
+                <input class="input" name="customerEmail" required type="email">
+            </div>
+
+            <div class="column">
+                <label for="fromAddress">From Address</label>
+                <input class="input" name="fromAddress" required type="text">
+            </div>
+
+            <div class="column">
+                <label for="toAddress">To Address</label>
+                <input class="input" name="toAddress" required type="text">
+            </div>
+        </div>
+        <div class="container column is-one-fifth">
+            <button class="button is-fullwidth is-half is-primary">Add package</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

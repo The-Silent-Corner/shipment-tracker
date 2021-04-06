@@ -1,7 +1,9 @@
-<% let classes = ""; %>
-<% for(let i = 0; i < message[0].classes.length; i++) { %>
-    <% classes = classes.concat(" ", message[0].classes[i]); %>
+<% if(message.length > 0) { %>
+    <% let classes = ""; %>
+    <% for(let i = 0; i < message[0].classes.length; i++) { %>
+        <% classes = classes.concat(" ", message[0].classes[i]); %>
+    <% } %>
+    <div class="has-text-centered notification <%- classes %>">
+        <%- message[0].text %>
+    </div>
 <% } %>
-<div class="has-text-centered notification <%- classes %>">
-    <%- message[0].text %>
-</div>
