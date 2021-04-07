@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const Employee = require("../db/Models/Employee");
 const jwt = require("jsonwebtoken");
@@ -37,4 +37,4 @@ router.get("/", async(req, res) =>{
   }
   res.render("login", { message: req.flash("message") });
 });
-  module.exports = router;
+module.exports = router;

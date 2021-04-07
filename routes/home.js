@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {validLogin} = require("../helpers/jwtHelpers")
+const { validLogin } = require("../helpers/jwtHelpers");
 
 router.get("/", async(req, res) => {
   if(req.signedCookies.user) {
@@ -12,6 +12,5 @@ router.get("/", async(req, res) => {
   }
   res.render("index");
 });
-  
 
-  module.exports = router;
+module.exports = router;
