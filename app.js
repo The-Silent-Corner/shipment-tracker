@@ -42,7 +42,7 @@ app.get("/login", async(req, res) =>{
   if(req.signedCookies.user) {
     return res.redirect("/");
   }
-  res.render("login");
+  res.render("login", { message: req.flash("message") });
 });
 
 app.post("/login", async(req, res) =>{
@@ -54,7 +54,11 @@ app.post("/login", async(req, res) =>{
       }
     });
     if(findEmployee.length !== 1) {
-      return res.sendStatus(401);
+      req.flash("message", {
+        classes: ["is-danger is-light"],
+        text: "Invalid credentials"
+      });
+      return res.redirect("/login");
     }
     if(password === findEmployee[0].password) {
       const token = jwt.sign({ user: findEmployee[0].id }, process.env.SECRET, {

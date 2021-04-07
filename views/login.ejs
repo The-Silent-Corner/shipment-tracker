@@ -14,7 +14,10 @@
     <div>
         <%- include("partials/navbar-normal.ejs") %>
         <div class="container column">
-            <h1>Login</h1>
+            <%- include("partials/messages", { message: message} ) %>
+            <div class="mb-4">
+                <h1 class="title is-4">Login</h1>
+            </div>
             <form action="/login" method="post">
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
